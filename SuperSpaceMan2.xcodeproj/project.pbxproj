@@ -102,7 +102,6 @@
 				A4BCC5FA1B2F2BEF005B857B /* AppDelegate.swift */,
 				A4174F741B385EAB00CB2B17 /* EngineExhaust.sks */,
 				A4174F751B385EAB00CB2B17 /* spark.png */,
-				A444C2E51B39FE350055C5D0 /* orb_pop.wav */,
 				A4BCC6021B2F2BEF005B857B /* Main.storyboard */,
 				A4BCC6051B2F2BEF005B857B /* Images.xcassets */,
 				A4BCC6071B2F2BEF005B857B /* LaunchScreen.xib */,
@@ -114,6 +113,7 @@
 		A4BCC5F81B2F2BEF005B857B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A444C2E51B39FE350055C5D0 /* orb_pop.wav */,
 				A444C2DD1B38D9920055C5D0 /* sounds */,
 				A444C2E31B39F7D40055C5D0 /* sounds */,
 				A4CAC17A1B360AEE00D0BF9D /* sprites.atlas */,
@@ -380,7 +380,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SuperSpaceMan2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -394,7 +394,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SuperSpaceMan2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

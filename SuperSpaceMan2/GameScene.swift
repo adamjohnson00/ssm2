@@ -37,6 +37,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
     let startGameTextNode = SKLabelNode(fontNamed: "Copperplate")
 
+    var shootButton : SKSpriteNode?
+
 
     required init?(coder aDecoder: NSCoder)
     {

@@ -14,6 +14,10 @@ import CoreMotion
 class MainMenuScene: SKScene, SKPhysicsContactDelegate
 {
 
+    var titleLabel = SKLabelNode(fontNamed: "Copperplate")
+    var tapScreenLabel = SKLabelNode(fontNamed: "Copperplate")
+
+
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
@@ -24,9 +28,25 @@ class MainMenuScene: SKScene, SKPhysicsContactDelegate
     {
         super.init(size: size)
 
-        
+        backgroundColor = SKColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+
+        addMainMenuSceneLabels()
+    }
 
 
+    func addMainMenuSceneLabels()
+    {
+        titleLabel.text = "Title Screen"
+        titleLabel.fontSize = 40
+        titleLabel.fontColor = SKColor.whiteColor()
+        titleLabel.position = CGPointMake(size.width / 2, size.height / 2)
+        addChild(titleLabel)
+
+        tapScreenLabel.text = "Tap Screen To Begin"
+        tapScreenLabel.fontSize = 25
+        tapScreenLabel.fontColor = SKColor.whiteColor()
+        tapScreenLabel.position = CGPointMake(size.width / 2, size.height / 2 - 80)
+        addChild(tapScreenLabel)
     }
 
 
