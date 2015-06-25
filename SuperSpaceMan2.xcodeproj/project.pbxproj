@@ -14,6 +14,9 @@
 		A444C2E41B39F7D40055C5D0 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = A444C2E31B39F7D40055C5D0 /* sounds */; };
 		A444C2E61B39FE350055C5D0 /* orb_pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = A444C2E51B39FE350055C5D0 /* orb_pop.wav */; };
 		A444C34C1B3B05740055C5D0 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A444C34B1B3B05740055C5D0 /* MainMenuScene.swift */; };
+		A4849CD21B3C992E00AA842B /* blast.wav in Resources */ = {isa = PBXBuildFile; fileRef = A4849CD11B3C992E00AA842B /* blast.wav */; };
+		A4849CD41B3C9B3700AA842B /* bluelaserwhiteborder.png in Resources */ = {isa = PBXBuildFile; fileRef = A4849CD31B3C9B3700AA842B /* bluelaserwhiteborder.png */; };
+		A4849CD61B3C9BDC00AA842B /* lowblast.wav in Resources */ = {isa = PBXBuildFile; fileRef = A4849CD51B3C9BDC00AA842B /* lowblast.wav */; };
 		A4BCC5FB1B2F2BEF005B857B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BCC5FA1B2F2BEF005B857B /* AppDelegate.swift */; };
 		A4BCC5FF1B2F2BEF005B857B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BCC5FE1B2F2BEF005B857B /* GameScene.swift */; };
 		A4BCC6011B2F2BEF005B857B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BCC6001B2F2BEF005B857B /* GameViewController.swift */; };
@@ -42,6 +45,9 @@
 		A444C2E31B39F7D40055C5D0 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = "../../../../../Downloads/Swift 1.2 updated code/assets/sprites.atlas/sounds"; sourceTree = "<group>"; };
 		A444C2E51B39FE350055C5D0 /* orb_pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = orb_pop.wav; sourceTree = SOURCE_ROOT; };
 		A444C34B1B3B05740055C5D0 /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		A4849CD11B3C992E00AA842B /* blast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blast.wav; sourceTree = "<group>"; };
+		A4849CD31B3C9B3700AA842B /* bluelaserwhiteborder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluelaserwhiteborder.png; sourceTree = "<group>"; };
+		A4849CD51B3C9BDC00AA842B /* lowblast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lowblast.wav; sourceTree = "<group>"; };
 		A4BCC5F51B2F2BEF005B857B /* SuperSpaceMan2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperSpaceMan2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4BCC5F91B2F2BEF005B857B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4BCC5FA1B2F2BEF005B857B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,8 +108,11 @@
 				A4BCC5FA1B2F2BEF005B857B /* AppDelegate.swift */,
 				A4174F741B385EAB00CB2B17 /* EngineExhaust.sks */,
 				A4174F751B385EAB00CB2B17 /* spark.png */,
+				A4849CD11B3C992E00AA842B /* blast.wav */,
+				A4849CD51B3C9BDC00AA842B /* lowblast.wav */,
 				A4BCC6021B2F2BEF005B857B /* Main.storyboard */,
 				A4BCC6051B2F2BEF005B857B /* Images.xcassets */,
+				A4849CD31B3C9B3700AA842B /* bluelaserwhiteborder.png */,
 				A4BCC6071B2F2BEF005B857B /* LaunchScreen.xib */,
 				A4BCC5F81B2F2BEF005B857B /* Supporting Files */,
 			);
@@ -224,9 +233,12 @@
 				A444C2DE1B38D9920055C5D0 /* sounds in Resources */,
 				A4174F771B385EAB00CB2B17 /* spark.png in Resources */,
 				A4BCC6061B2F2BEF005B857B /* Images.xcassets in Resources */,
+				A4849CD61B3C9BDC00AA842B /* lowblast.wav in Resources */,
+				A4849CD41B3C9B3700AA842B /* bluelaserwhiteborder.png in Resources */,
 				A444C2E61B39FE350055C5D0 /* orb_pop.wav in Resources */,
 				A444C2E41B39F7D40055C5D0 /* sounds in Resources */,
 				A4174F761B385EAB00CB2B17 /* EngineExhaust.sks in Resources */,
+				A4849CD21B3C992E00AA842B /* blast.wav in Resources */,
 				A4CAC17B1B360AEE00D0BF9D /* sprites.atlas in Resources */,
 				A4BCC6041B2F2BEF005B857B /* Main.storyboard in Resources */,
 			);

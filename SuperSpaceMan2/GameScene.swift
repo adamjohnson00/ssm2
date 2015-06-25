@@ -23,6 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let CollisionCategoryPlayer : UInt32 = 0x1 << 1
     let CollisionCategoryPowerUpOrbs : UInt32 = 0x1 << 2
     let CollisionCategoryBlackHoles : UInt32 = 0x1 << 3
+    let CollisionCategoryBlueLaser : UInt32 = 0x1 << 4
 
     var engineExhaust : SKEmitterNode?
 
@@ -35,9 +36,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
     var orbPopAction = SKAction.playSoundFileNamed("orb_pop.wav", waitForCompletion: false)
 
+    var shootNoiseSoundAction = SKAction.playSoundFileNamed("lowblast.wav", waitForCompletion: false)
+
     let startGameTextNode = SKLabelNode(fontNamed: "Copperplate")
 
     var shootButton : SKSpriteNode?
+
+    var shooting = false
+    var lastShootingTime : CFTimeInterval = 0
+    var delayBetweenShots : CFTimeInterval = 0.5
+
+    var blueLaser : SKSpriteNode?
 
 
     required init?(coder aDecoder: NSCoder)
@@ -54,7 +63,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         physicsWorld.contactDelegate = self
 
         // Sets the strength of gravity.
-        physicsWorld.gravity = CGVectorMake(0.0, -5.0)
+//        physicsWorld.gravity = CGVectorMake(0.0, -5.0)
+        physicsWorld.gravity = CGVectorMake(0.0, 0.0)
+
 
         // Turns on user interaction.
         userInteractionEnabled = true
@@ -64,7 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         addStarsBackground()
 
-        addPlanetBackground()
+        //addPlanetBackground()
 
         addForeground()
 
@@ -82,9 +93,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         addStartGameLabel()
 
+        addShootButton()
+
         // Prints size of screen.
-        //println("The size is (\(size.width), \(size.height)).")
+        println("The size is (\(size.width), \(size.height)).")
     }
+
+
+
 
 
     func addStartGameLabel()
@@ -139,10 +155,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     {
         // Sets background color behind image to black.
         backgroundColor = SKColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+
         // Adds the background picture.
         backgroundNode = SKSpriteNode(imageNamed: "Background")
+
         // Sets the background's anchor point.
         backgroundNode!.anchorPoint = CGPoint(x: 0.5, y: 0.0)
+
         // Sets the background's position.
         backgroundNode!.position = CGPoint(x: size.width / 2.0, y: 0.0)
 
@@ -285,12 +304,67 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
     }
 
+
+    func addShootButton()
+    {
+        shootButton = SKSpriteNode(imageNamed: "shootbutton")
+
+        shootButton!.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+
+        shootButton!.position = CGPoint(x: self.size.width - 50, y: 50)
+
+        shootButton!.name = "shootbutton"
+
+        addChild(shootButton!)
+    }
+
+
+    func shootLaser()
+    {
+
+
+
+    }
+
+
+
+    func addBlueLaser()
+    {
+        blueLaser = SKSpriteNode(imageNamed: "bluelaserwhiteborder")
+
+        blueLaser!.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+
+        blueLaser!.position = CGPoint(x: playerNode!.position.x, y: playerNode!.position.y)
+
+
+        blueLaser!.physicsBody = SKPhysicsBody(circleOfRadius: blueLaser!.size.height / 2)
+
+        blueLaser!.physicsBody!.dynamic = false
+
+        // Move the blue laser up the screen (shoot the laser).
+        let moveUpAction = SKAction.moveToY(playerNode!.position.y + 3000, duration: 3.0)
+
+        blueLaser!.runAction(moveUpAction)
+
+        blueLaser!.name = "blue_laser"
+
+        blueLaser!.physicsBody!.categoryBitMask = CollisionCategoryBlueLaser
+        blueLaser!.physicsBody!.contactTestBitMask = CollisionCategoryBlackHoles
+        blueLaser!.physicsBody!.collisionBitMask = 0
+
+        addChild(blueLaser!)
+
+
+    }
+
     
     // This method executes when the user touches the screen.
     override func touchesBegan(touches: Set <NSObject>, withEvent event: UIEvent)
     {
-        // Apply impulse to player node when screen is tapped.
-        // playerNode!.physicsBody!.applyImpulse(CGVectorMake(0.0, 40.0))
+        // Add blaster shot.
+
+        addBlueLaser()
+
 
         if playerNode != nil
         {
@@ -299,12 +373,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 // Removes the "Tap Anywhere to Start" label once the screen has been tapped.
                 startGameTextNode.removeFromParent()
 
+
+                // Play blaster noise.
+                runAction(shootNoiseSoundAction)
+
                 playerNode!.physicsBody!.dynamic = true
 
                 self.coreMotionManager.accelerometerUpdateInterval = 0.3
 
                 self.coreMotionManager.startAccelerometerUpdatesToQueue(NSOperationQueue(), withHandler:
-                    {
+                {
                         (data: CMAccelerometerData!, error: NSError!) in
 
                         if let constVar = error
@@ -317,19 +395,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                         }
                 })
             }
+
             if impulseCount > 0
             {
                 playerNode!.physicsBody!.applyImpulse(CGVectorMake(0.0, 40.0))
                 impulseCount--
 
                 impulseTextNode.text = "IMPULSES : \(impulseCount)"
-                
+
+                // Shows fire coming from engine.
                 self.engineExhaust!.hidden = false
                 
                 NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "hideEngineExhaust:", userInfo: nil, repeats: false)
             }
         }
     }
+
+
+
+
+
+
+
 
 
     // This method executes when the player node (the spaceship) touches either orbs or black holes.
@@ -339,27 +426,63 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         if nodeB.name == "POWER_UP_ORB"
         {
+            // Plays orb pop sound.
             runAction(orbPopAction)
 
+            // Adds an impulse to total impulses.
             impulseCount++
+
+            // Updates the impulse label.
             impulseTextNode.text = "IMPULSES : \(impulseCount)"
 
+            // Adds one point to the score.
             score++
+
+            // Updates the score label.
             scoreTextNode.text = "SCORE : \(score)"
 
+            // Removes orb from screen.
             nodeB.removeFromParent()
+
         }
+
         else if nodeB.name == "BLACK_HOLE"
         {
+            // Disables players ability to collide with objects.
             playerNode!.physicsBody!.contactTestBitMask = 0
+
+            // Removes all impulses.
             impulseCount = 0
 
-            // Turns the player red when he touches a black hole to signify that he has died.
+            // Turns the player red when he touches a black hole.
             var colorizeAction = SKAction.colorizeWithColor(UIColor.redColor(), colorBlendFactor: 1.0, duration: 0.8)
 
+            // Runs the action.
             playerNode!.runAction(colorizeAction)
+
+            // Removes black hole from screen.
+            nodeB.removeFromParent()
         }
+
+
+        if blueLaser != nil
+        {
+            if blueLaser!.position.y > size.height
+            {
+
+                blueLaser!.physicsBody!.contactTestBitMask = 0
+
+            }
+        }
+
     }
+
+
+
+
+
+
+
 
 
     override func update(currentTime: NSTimeInterval)
@@ -372,7 +495,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
                 backgroundStarsNode!.position = CGPointMake(backgroundStarsNode!.position.x, -((playerNode!.position.y - 180.0) / 6))
 
-                backgroundPlanetNode!.position = CGPointMake(backgroundPlanetNode!.position.x, -((playerNode!.position.y - 180.0) / 8))
+                //backgroundPlanetNode!.position = CGPointMake(backgroundPlanetNode!.position.x, -((playerNode!.position.y - 180.0) / 8))
 
                 foregroundNode!.position = CGPointMake(foregroundNode!.position.x, -(playerNode!.position.y - 180.0))
             }
@@ -384,6 +507,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             {
                 gameOverWithResult(false)
             }
+
+
         }
     }
 
