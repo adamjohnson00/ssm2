@@ -15,9 +15,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var backgroundStarsNode : SKSpriteNode?
     var backgroundPlanetNode : SKSpriteNode?
     var playerNode : SKSpriteNode?
-    var impulseCount = 40
+
     var coreMotionManager = CMMotionManager()
     var xAxisAcceleration : CGFloat = 0
+
     var foregroundNode : SKSpriteNode?
 
     let CollisionCategoryPlayer : UInt32 = 0x1 << 1
@@ -26,9 +27,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let CollisionCategoryBlueLaser : UInt32 = 0x1 << 4
 
     var engineExhaust : SKEmitterNode?
-
     var exhaustTime : NSTimer?
 
+    var impulseCount = 40
     var score = 0
     let scoreTextNode = SKLabelNode(fontNamed: "Copperplate")
 
@@ -42,9 +43,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
     var shootButton : SKSpriteNode?
 
-    var shooting = false
-    var lastShootingTime : CFTimeInterval = 0
-    var delayBetweenShots : CFTimeInterval = 0.5
+//    var shooting = false
+//    var lastShootingTime : CFTimeInterval = 0
+//    var delayBetweenShots : CFTimeInterval = 0.5
 
     var blueLaser : SKSpriteNode?
 
@@ -93,10 +94,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         addStartGameLabel()
 
-        addShootButton()
+        //addShootButton()
 
         // Prints size of screen.
-        println("The size is (\(size.width), \(size.height)).")
+        //println("The size is (\(size.width), \(size.height)).")
     }
 
 
@@ -305,26 +306,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     }
 
 
-    func addShootButton()
-    {
-        shootButton = SKSpriteNode(imageNamed: "shootbutton")
-
-        shootButton!.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-
-        shootButton!.position = CGPoint(x: self.size.width - 50, y: 50)
-
-        shootButton!.name = "shootbutton"
-
-        addChild(shootButton!)
-    }
-
-
-    func shootLaser()
-    {
+//    func addShootButton()
+//    {
+//        shootButton = SKSpriteNode(imageNamed: "shootbutton")
+//
+//        shootButton!.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+//
+//        shootButton!.position = CGPoint(x: self.size.width - 50, y: 50)
+//
+//        shootButton!.name = "shootbutton"
+//
+//        addChild(shootButton!)
+//    }
 
 
-
-    }
+//    func shootLaser()
+//    {
+//
+//
+//
+//    }
 
 
 
@@ -353,8 +354,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         blueLaser!.physicsBody!.collisionBitMask = 0
 
         addChild(blueLaser!)
-
-
     }
 
     
@@ -443,7 +442,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
             // Removes orb from screen.
             nodeB.removeFromParent()
-
         }
 
         else if nodeB.name == "BLACK_HOLE"
@@ -469,12 +467,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             if blueLaser!.position.y > size.height
             {
-
                 blueLaser!.physicsBody!.contactTestBitMask = 0
-
             }
         }
-
     }
 
 
@@ -499,30 +494,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
                 foregroundNode!.position = CGPointMake(foregroundNode!.position.x, -(playerNode!.position.y - 180.0))
             }
+
             else if playerNode!.position.y > 7000
             {
                 gameOverWithResult(true)
             }
+
             else if playerNode!.position.y < 0.0
             {
                 gameOverWithResult(false)
             }
-
-
         }
     }
 
 
+
     override func didSimulatePhysics()
     {
+
         if playerNode != nil
         {
+
             self.playerNode!.physicsBody!.velocity = CGVectorMake(self.xAxisAcceleration * 380.0, self.playerNode!.physicsBody!.velocity.dy)
 
             if playerNode!.position.x < -(playerNode!.size.width / 2)
             {
                 playerNode!.position = CGPointMake(size.width - playerNode!.size.width / 2, playerNode!.position.y)
             }
+
             else if self.playerNode!.position.x > self.size.width
             {
                 playerNode!.position = CGPointMake(playerNode!.size.width / 2, playerNode!.position.y)
@@ -531,19 +530,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     }
 
 
+
     deinit
     {
         self.coreMotionManager.stopAccelerometerUpdates()
     }
 
 
-    func hideEngineExhaust(timer:NSTimer!)
+
+    func hideEngineExhaust(timer: NSTimer!)
     {
         if !engineExhaust!.hidden
         {
             engineExhaust!.hidden = true
         }
     }
+
 
 
     func gameOverWithResult(gameResult: Bool)
@@ -556,6 +558,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         view?.presentScene(menuScene, transition: transition)
     }
+
 }
 
 
